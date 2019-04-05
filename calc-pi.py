@@ -6,6 +6,7 @@ import subprocess
 from gevent.pywsgi import WSGIServer
 from flask import Flask, after_this_request, render_template, request, send_file
 from subprocess import Popen, PIPE, STDOUT
+from timeit import default_timer as timer
 
 app = Flask(__name__)
 
@@ -47,11 +48,15 @@ def api():
             calculate = True
     
     value = None
+    duration = None
     if calculate:
         print('calculating pi to ', digits)
+        start = timer()
         value = calculate_pi(digits)
+        end = timer()
+        duration = end - start
 
-    return render_template('index.html', digits=digits, value=value)
+    return render_template('index.html', digits=digits, value=value, duration=duration)
 
 if __name__ == "__main__":
     http_server = WSGIServer(('', int(os.environ.get('PORT', 8080))), app)

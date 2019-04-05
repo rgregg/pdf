@@ -21,6 +21,7 @@
         </form>
 
         {% if value %}
+        <p>It took {{duration}} seconds to calculate these digits</p>
         <textarea rows="15" cols="110" style="height: 300px; font-size: 10pt; font-family: monospace">{{value}}</textarea>
         {% endif %}
     </main>
